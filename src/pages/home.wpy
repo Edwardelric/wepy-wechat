@@ -1,0 +1,149 @@
+<template>
+  <view class="home">
+    <swiper class="swiper"
+            indicator-active-color="{{indicatorActiveColor}}"
+            indicator-dots="{{indicatorDots}}"
+            autoplay="{{autoplay}}"
+            interval="{{interval}}"
+            duration="{{duration}}"
+            circular="true"
+    >
+      <block wx:for="{{adList}}" wx:key="key">
+        <swiper-item>
+          <image src="{{item.picUrl}}" class="slide-image" @tap="goToAdvert({{item.advertUrl}})" />
+        </swiper-item>
+      </block>
+    </swiper>
+    <view class="search-wrapper">
+      <navigator url="/pages/search" open-type="navigate" class="search_content">
+        <view class="search_input">
+          <i class="icon iconfont icon-search"></i>搜索商品
+        </view>
+      </navigator>
+      <navigator url="/pages/message" class="message">
+        <view>
+          <i class="icon iconfont icon-kefu"></i>
+          <view>消息</view>
+        </view>
+      </navigator>
+    </view>
+    <view class="nav-list">
+      <navigator open-type="navigate" url="/pages/signin">
+        <i class="icon iconfont icon-shenfenzheng"></i>
+        <view>新人专区</view>
+      </navigator>
+      <navigator open-type="navigate" url="/pages/signin">
+        <i class="icon iconfont icon-fenxiang"></i>
+        <view>热销专区</view>
+      </navigator>
+      <navigator open-type="navigate" url="/pages/signin">
+        <i class="icon iconfont icon-saoyisao"></i>
+        <view>特价专区</view>
+      </navigator>
+      <navigator open-type="navigate" url="/pages/signin">
+        <i class="icon iconfont icon-shouye"></i>
+        <view>签到有礼</view>
+      </navigator>
+    </view>
+    <view>
+      这里是具体的内容
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class Home extends wepy.page {
+    config = {
+      navigationBarTitleText: "我的首页"
+    }
+    data = {
+      indicatorActiveColor: "#fff",
+      indicatorDots: true,
+      autoplay: true,
+      interval: 3000,
+      duration: 1000,
+      adList: []
+    }
+    onLoad() {
+      this.adList = [
+        {
+          picUrl: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1507539500499&di=8753735c55a20fd292e47a51464f036a&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fbaike%2Fpic%2Fitem%2Ff7246b600c3387444fc3bcde510fd9f9d72aa00a.jpg",
+          advertUrl: "https://www.baidu.com"
+        },
+        {
+          picUrl: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1507539500499&di=8753735c55a20fd292e47a51464f036a&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fbaike%2Fpic%2Fitem%2Ff7246b600c3387444fc3bcde510fd9f9d72aa00a.jpg",
+          advertUrl: "https://www.baidu.com"
+        }
+      ];
+    }
+
+  }
+</script>
+
+<style lang="scss">
+  @import "../assets/styles/_mixins";
+  .home {
+    background: $gray;
+    .swiper {
+      .slide-image{
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .search-wrapper {
+      position: absolute;
+      top: 14rpx;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      width: 500rpx;
+      margin: 0 auto;
+      .search_content {
+        display: flex;
+        align-items: center;
+        width: 400rpx;
+        height: 55rpx;
+        margin: 0 auto;
+        border: 1px solid #efefee;
+        border-radius: 100rpx;
+        background: rgba(0, 0, 0, 0.1);
+        view {
+          color: $white;
+          font-size: 26rpx;
+          i {
+            margin: 0 20rpx;
+          }
+        }
+      }
+      .message {
+        view {
+          color: $white;
+          font-size: 18rpx;
+          text-align: center;
+          i {
+            font-size: 24rpx;
+          }
+        }
+      }
+    }
+    .nav-list {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-around;
+      align-items: center;
+      margin-bottom: 10rpx;
+      padding: 10rpx 0;
+      background: $white;
+      text-align: center;
+      i {
+        font-size: 50rpx;
+      }
+      view {
+        font-size: 22rpx;
+      }
+    }
+  }
+</style>

@@ -1,0 +1,23 @@
+<style lang="scss">
+  @import "./assets/styles/common";
+</style>
+
+<script>
+import wepy from 'wepy'
+
+export default class Index extends wepy.app {
+  config = {
+    pages: [
+      'pages/home'
+    ],
+    window: {
+      backgroundTextStyle: 'dark',              // 下拉背景字体、loading图的样式
+      navigationBarBackgroundColor: '#FFFFFF',  // 导航栏背景颜色
+      navigationBarTitleText: 'WeChat',         // 导航栏标题文字内容
+      navigationBarTextStyle: 'black',          // 导航栏标题颜色
+      enablePullDownRefresh: false,             // 是否开启下拉刷新
+      backgroundColor: '#EFEFEF'                // tab的背景色
+    }
+  }
+}
+</script>
