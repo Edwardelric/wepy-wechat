@@ -20,10 +20,46 @@ export default class Index extends wepy.app {
       navigationBarTextStyle: "black",          // 导航栏标题颜色
       enablePullDownRefresh: false,             // 是否开启下拉刷新
       backgroundColor: "#EFEFEF"                // tab的背景色
+    },
+    tabBar: {
+      "color": "#999999",
+      "selectedColor": "#ff6a3c",
+      "backgroundColor": "#ffffff",
+      "borderStyle": "black",
+      "list": [{
+        "pagePath": "pages/home",
+        "text": "首页",
+        "iconPath": "assets/images/common/icon_home.png",
+        "selectedIconPath": "assets/images/common/icon_home_active.png"
+      }, {
+        "pagePath": "pages/search",
+        "text": "分类",
+        "iconPath": "assets/images/common/icon_classify.png",
+        "selectedIconPath": "assets/images/common/icon_classify_active.png"
+      }, {
+        "pagePath": "pages/search",
+        "text": "购物车",
+        "iconPath": "assets/images/common/icon_shop_cart.png",
+        "selectedIconPath": "assets/images/common/icon_shop_cart_active.png"
+      }, {
+        "pagePath": "pages/search",
+        "text": "我",
+        "iconPath": "assets/images/common/icon_info.png",
+        "selectedIconPath": "assets/images/common/icon_info_active.png"
+      }]
     }
   }
   onLaunch() {
     console.log("onLaunch");
+  }
+  onShow() {
+    console.log("show")
+  }
+  onHide() {
+    console.log("hide");
+  }
+  onReady() {
+    console.log("ready");
   }
 }
 </script>
