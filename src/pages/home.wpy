@@ -45,14 +45,21 @@
         <view>签到有礼</view>
       </navigator>
     </view>
-    <view>
-      这里是具体的内容
+    <!--{{discoverList[0].code}}-->
+    <!--{{parentTitle}}-->
+    <view class="panel">
+      <view class="title">优惠活动</view>
     </view>
+    <Discover :list.sync="discoverList" :title="parentTitle"></Discover>
+    <Loading :show.sync="showLoading" message="正在加载"></Loading>
   </view>
 </template>
 
 <script>
-  import wepy from 'wepy'
+  import wepy from "wepy";
+  import Discover from "../components/discover";
+  import Loading from "../components/loading";
+  import "wepy-async-function";
 
   export default class Home extends wepy.page {
     config = {
@@ -64,7 +71,14 @@
       autoplay: true,
       interval: 3000,
       duration: 1000,
-      adList: []
+      adList: [],
+      discoverList: [],
+      parentTitle: 'p-title',
+      showLoading: false
+    }
+    components = {
+      Discover,
+      Loading
     }
     onLoad() {
       this.adList = [
@@ -77,8 +91,55 @@
           advertUrl: "https://www.baidu.com"
         }
       ];
-    }
+      this.discoverList = [
+        {
+          picUrl: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1507539500500&di=78794fe36f52dd8863e15054009fce32&imgtype=0&src=http%3A%2F%2Fecx.images-amazon.com%2Fimages%2FP%2FB00B5UP2E8.28-6515940865.PT02.LXXXXXXX.jpg",
+          brand: "素洁",
+          time: "2018",
+          series: "春季新款",
+          code: "100"
+        },
+        {
+          picUrl: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1507539500500&di=78794fe36f52dd8863e15054009fce32&imgtype=0&src=http%3A%2F%2Fecx.images-amazon.com%2Fimages%2FP%2FB00B5UP2E8.28-6515940865.PT02.LXXXXXXX.jpg",
+          brand: "素洁",
+          time: "2018",
+          series: "全新升级版",
+          code: "200"
+        },
+        {
+          picUrl: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1507539500500&di=78794fe36f52dd8863e15054009fce32&imgtype=0&src=http%3A%2F%2Fecx.images-amazon.com%2Fimages%2FP%2FB00B5UP2E8.28-6515940865.PT02.LXXXXXXX.jpg",
+          brand: "素洁",
+          time: "2017",
+          series: "冬季",
+          code: "300"
+        },
+        {
+          picUrl: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1507539500500&di=78794fe36f52dd8863e15054009fce32&imgtype=0&src=http%3A%2F%2Fecx.images-amazon.com%2Fimages%2FP%2FB00B5UP2E8.28-6515940865.PT02.LXXXXXXX.jpg",
+          brand: "素洁",
+          time: "2016",
+          series: "冬季",
+          code: "400"
+        }
+      ];
+      setTimeout(() => {
+        this.discoverList[0].brand = "edwardelric";
+        this.$apply();
+      }, 4000);
 
+//      wepy.request("https://www.easy-mock.com/mock/592e626b91470c0ac1fed9b6/products_1496212075258/member#!method=get").then((d) => {
+//        console.log(d);
+//      })
+//      wepy.request('xxxx').then((d) => console.log(d));
+
+    }
+    onReachBottom() {
+      this.showLoading = true;
+      setTimeout(() => {
+        this.discoverList = this.discoverList.concat(this.discoverList);
+        this.showLoading = false;
+        this.$apply();
+      }, 2000);
+    }
   }
 </script>
 
@@ -134,7 +195,6 @@
       flex-flow: row nowrap;
       justify-content: space-around;
       align-items: center;
-      margin-bottom: 10rpx;
       padding: 10rpx 0;
       background: $white;
       text-align: center;

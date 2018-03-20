@@ -1,0 +1,28 @@
+<style lang="scss">
+</style>
+
+<template>
+    <view>search</view>
+</template>
+
+<script>
+  import wepy from "wepy";
+
+	export default class Search extends wepy.page{
+    config = {
+      navigationBarTitleText: "搜索页"
+    }
+    onLoad() {
+      console.log("load");
+    }
+    onReady() {
+      console.log("ready");
+    }
+    onShow() {
+      console.log("show");
+    }
+    onHide() {
+      console.log("hide");
+    }
+	};
+</script>

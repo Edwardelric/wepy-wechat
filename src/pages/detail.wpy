@@ -1,0 +1,29 @@
+<template>
+    <view class="detail-wrapper">
+      传递进来的code: {{code}}
+    </view>
+</template>
+
+<script>
+	import wepy from 'wepy';
+
+	export default class Loading extends wepy.page {
+	  config = {
+      navigationBarTitleText: "商品详情页"
+    }
+	  data = {
+	    code: ""
+    }
+    onLoad(option) {
+      console.log(option);
+      this.code = option.code
+    }
+	};
+</script>
+
+<style lang="scss">
+  @import "../assets/styles/_mixins";
+  .detail-wrapper {
+    font-size: 30rpx;
+  }
+</style>

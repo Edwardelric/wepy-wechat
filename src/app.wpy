@@ -3,21 +3,27 @@
 </style>
 
 <script>
-import wepy from 'wepy'
+import wepy from "wepy";
+import "wepy-async-function";
 
 export default class Index extends wepy.app {
   config = {
     pages: [
-      'pages/home'
+      "pages/home",
+      "pages/search",
+      "pages/detail"
     ],
     window: {
-      backgroundTextStyle: 'dark',              // 下拉背景字体、loading图的样式
-      navigationBarBackgroundColor: '#FFFFFF',  // 导航栏背景颜色
-      navigationBarTitleText: 'WeChat',         // 导航栏标题文字内容
-      navigationBarTextStyle: 'black',          // 导航栏标题颜色
+      backgroundTextStyle: "dark",              // 下拉背景字体、loading图的样式
+      navigationBarBackgroundColor: "#FFFFFF",  // 导航栏背景颜色
+      navigationBarTitleText: "WeChat",         // 导航栏标题文字内容
+      navigationBarTextStyle: "black",          // 导航栏标题颜色
       enablePullDownRefresh: false,             // 是否开启下拉刷新
-      backgroundColor: '#EFEFEF'                // tab的背景色
+      backgroundColor: "#EFEFEF"                // tab的背景色
     }
+  }
+  onLaunch() {
+    console.log("onLaunch");
   }
 }
 </script>
