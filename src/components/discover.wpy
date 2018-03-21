@@ -20,19 +20,10 @@
 
 	export default class Discover extends wepy.component{
 	  props = {
-      list: [],
-      title: {
-        twoWay: true
-      }
+      list: []
     }
     data = {}
-    onLoad() {
-      setTimeout(() => {
-        console.log(this.list);
-        this.list[0].code = "edward";
-        this.title = "elric";
-      }, 0);
-    }
+    onLoad() {}
 	};
 </script>
 
@@ -40,21 +31,20 @@
   @import "../assets/styles/_mixins";
   .discover-wrapper {
     .discover-item {
-      margin-bottom: 10rpx;
-      padding: 10rpx;
+      margin-bottom: $size14;
+      padding: $size14;
       background: $white;
       color: $gray;
       image {
-        width: 100%;
-        height: 300rpx;
+        height: rpx(300);
       }
       .brand {
-        padding: 2rpx 0;
-        font-size: 20rpx;
+        padding: rpx(2) 0;
+        font-size: $size24;
       }
       .series {
-        padding: 2rpx 0;
-        font-size: 20rpx;
+        padding: rpx(2) 0;
+        font-size: $size20;
       }
     }
   }

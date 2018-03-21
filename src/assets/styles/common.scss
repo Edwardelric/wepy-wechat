@@ -37,11 +37,17 @@ view {
   color: #666;
 }
 .panel {
-  margin: 10rpx 0;
-  padding: 10rpx 0;
+  margin: 14rpx 0;
+  padding: 14rpx 0;
   background: $white;
   .title {
-    padding-left: 20rpx;
+    margin-left: 14rpx;
+    padding-left: 14rpx;
     border-left: 10rpx solid red;
+    line-height: 30rpx;
   }
+}
+image {
+  width: 100%;
+  height: 100%;
 }

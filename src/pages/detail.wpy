@@ -1,7 +1,16 @@
 <template>
-    <view class="detail-wrapper">
-      传递进来的code: {{code}}
+  <view class="detail-wrapper">
+    <view class="detail-title">
+      <image src="" />
     </view>
+    <view class="detail-tips"></view>
+    <view class="detail-filter">
+
+    </view>
+    <view class="detail-lists">
+
+    </view>
+  </view>
 </template>
 
 <script>

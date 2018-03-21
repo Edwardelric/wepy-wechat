@@ -8,7 +8,7 @@
             duration="{{duration}}"
             circular="true"
     >
-      <block wx:for="{{adList}}" wx:key="key">
+      <block wx:for="{{swiperList}}" wx:key="key">
         <swiper-item>
           <image src="{{item.picUrl}}" class="slide-image" @tap="goToAdvert({{item.advertUrl}})" />
         </swiper-item>
@@ -45,21 +45,18 @@
         <view>签到有礼</view>
       </navigator>
     </view>
-    <!--{{discoverList[0].code}}-->
-    <!--{{parentTitle}}-->
     <view class="panel">
       <view class="title">优惠活动</view>
     </view>
-    <Discover :list.sync="discoverList" :title="parentTitle"></Discover>
-    <Loading :show.sync="showLoading" message="正在加载"></Loading>
+    <Discover :list.sync="discoverList"></Discover>
   </view>
 </template>
 
 <script>
   import wepy from "wepy";
-  import Discover from "../components/discover";
-  import Loading from "../components/loading";
   import "wepy-async-function";
+  import { swiperList, discoverList } from "../api/api";
+  import Discover from "../components/discover";
 
   export default class Home extends wepy.page {
     config = {
@@ -71,74 +68,37 @@
       autoplay: true,
       interval: 3000,
       duration: 1000,
-      adList: [],
-      discoverList: [],
-      parentTitle: 'p-title',
-      showLoading: false
+      swiperList: [],
+      discoverList: []
     }
     components = {
-      Discover,
-      Loading
+      Discover
     }
     onLoad() {
-      this.adList = [
-        {
-          picUrl: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1507539500499&di=8753735c55a20fd292e47a51464f036a&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fbaike%2Fpic%2Fitem%2Ff7246b600c3387444fc3bcde510fd9f9d72aa00a.jpg",
-          advertUrl: "https://www.baidu.com"
-        },
-        {
-          picUrl: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1507539500499&di=8753735c55a20fd292e47a51464f036a&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fbaike%2Fpic%2Fitem%2Ff7246b600c3387444fc3bcde510fd9f9d72aa00a.jpg",
-          advertUrl: "https://www.baidu.com"
+      swiperList({
+        query: {}
+      }).then((res) => {
+        if (res) {
+          this.swiperList = res;
+          this.$apply();
         }
-      ];
-      this.discoverList = [
-        {
-          picUrl: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1507539500500&di=78794fe36f52dd8863e15054009fce32&imgtype=0&src=http%3A%2F%2Fecx.images-amazon.com%2Fimages%2FP%2FB00B5UP2E8.28-6515940865.PT02.LXXXXXXX.jpg",
-          brand: "素洁",
-          time: "2018",
-          series: "春季新款",
-          code: "100"
-        },
-        {
-          picUrl: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1507539500500&di=78794fe36f52dd8863e15054009fce32&imgtype=0&src=http%3A%2F%2Fecx.images-amazon.com%2Fimages%2FP%2FB00B5UP2E8.28-6515940865.PT02.LXXXXXXX.jpg",
-          brand: "素洁",
-          time: "2018",
-          series: "全新升级版",
-          code: "200"
-        },
-        {
-          picUrl: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1507539500500&di=78794fe36f52dd8863e15054009fce32&imgtype=0&src=http%3A%2F%2Fecx.images-amazon.com%2Fimages%2FP%2FB00B5UP2E8.28-6515940865.PT02.LXXXXXXX.jpg",
-          brand: "素洁",
-          time: "2017",
-          series: "冬季",
-          code: "300"
-        },
-        {
-          picUrl: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1507539500500&di=78794fe36f52dd8863e15054009fce32&imgtype=0&src=http%3A%2F%2Fecx.images-amazon.com%2Fimages%2FP%2FB00B5UP2E8.28-6515940865.PT02.LXXXXXXX.jpg",
-          brand: "素洁",
-          time: "2016",
-          series: "冬季",
-          code: "400"
+      });
+      discoverList({
+        query: {}
+      }).then((res) => {
+        if (res) {
+          this.discoverList = res;
+          this.$apply();
         }
-      ];
-      setTimeout(() => {
-        this.discoverList[0].brand = "edwardelric";
-        this.$apply();
-      }, 4000);
-
-//      wepy.request("https://www.easy-mock.com/mock/592e626b91470c0ac1fed9b6/products_1496212075258/member#!method=get").then((d) => {
-//        console.log(d);
-//      })
-//      wepy.request('xxxx').then((d) => console.log(d));
-
+      });
     }
-    onReachBottom() {
-      this.showLoading = true;
-      setTimeout(() => {
-        this.discoverList = this.discoverList.concat(this.discoverList);
-        this.showLoading = false;
-        this.$apply();
-      }, 2000);
+    onReachBottom() {}
+    methods = {
+      goToAdvert(url) {
+        weyp.navigateTo({
+          url
+        });
+      }
     }
   }
 </script>
@@ -147,45 +107,38 @@
   @import "../assets/styles/_mixins";
   .home {
     background: $gray;
-    .swiper {
-      .slide-image{
-        width: 100%;
-        height: 100%;
-      }
-    }
     .search-wrapper {
       position: absolute;
-      top: 14rpx;
+      top: $size14;
       left: 0;
       right: 0;
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      width: 500rpx;
+      width: 70%;
       margin: 0 auto;
       .search_content {
         display: flex;
-        align-items: center;
-        width: 400rpx;
-        height: 55rpx;
-        margin: 0 auto;
+        width: 90%;
+        padding: rpx(8) 0;
         border: 1px solid #efefee;
-        border-radius: 100rpx;
+        border-radius: rpx(100);
         background: rgba(0, 0, 0, 0.1);
         view {
           color: $white;
-          font-size: 26rpx;
+          font-size: $size24;
           i {
-            margin: 0 20rpx;
+            margin: 0 $size20;
           }
         }
       }
       .message {
         view {
           color: $white;
-          font-size: 18rpx;
+          font-size: rpx(18);
           text-align: center;
           i {
-            font-size: 24rpx;
+            font-size: $size24;
           }
         }
       }
@@ -195,14 +148,14 @@
       flex-flow: row nowrap;
       justify-content: space-around;
       align-items: center;
-      padding: 10rpx 0;
+      padding: $size14 0;
       background: $white;
       text-align: center;
       i {
-        font-size: 50rpx;
+        font-size: rpx(50);
       }
       view {
-        font-size: 22rpx;
+        font-size: $size24;
       }
     }
   }
