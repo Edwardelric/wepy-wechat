@@ -6,7 +6,6 @@
             autoplay="{{autoplay}}"
             interval="{{interval}}"
             duration="{{duration}}"
-            circular="true"
     >
       <block wx:for="{{swiperList}}" wx:key="key">
         <swiper-item>
@@ -55,10 +54,12 @@
 <script>
   import wepy from "wepy";
   import "wepy-async-function";
-  import { swiperList, discoverList } from "../api/api";
   import Discover from "../components/discover";
+  import http from "../utils/http";
+  import { swiperListUrl, discoverListUrl } from "../api/api";
 
   export default class Home extends wepy.page {
+    mixins = [http]
     config = {
       navigationBarTitleText: "我的首页"
     }
@@ -75,22 +76,38 @@
       Discover
     }
     onLoad() {
-      swiperList({
-        query: {}
-      }).then((res) => {
-        if (res) {
-          this.swiperList = res;
-          this.$apply();
+      this.$get(
+        {
+          url: swiperListUrl,
+          data: {
+            MockkeyName: "swiperList"
+          }
+        },
+        {
+          success: (res) => {
+            this.swiperList = res;
+          },
+          fail: (res) => {
+            console.log(res);
+          }
         }
-      });
-      discoverList({
-        query: {}
-      }).then((res) => {
-        if (res) {
-          this.discoverList = res;
-          this.$apply();
+      );
+      this.$get(
+        {
+          url: discoverListUrl,
+          data: {
+            MockkeyName: "discoverList"
+          }
+        },
+        {
+          success: (res) => {
+            this.discoverList = res;
+          },
+          fail: (res) =>  {
+            console.log(res);
+          }
         }
-      });
+      );
     }
     onReachBottom() {}
     methods = {

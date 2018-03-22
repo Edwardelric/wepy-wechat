@@ -1,0 +1,19 @@
+<template>
+    <view></view>
+</template>
+
+<script>
+	import wepy from 'wepy';
+
+	export default class Shopdetail extends wepy.page {
+    config = {
+      navigationBarTitleText: "商品详情"
+    }
+    onLoad(option) {
+      console.log(option);
+    }
+	};
+</script>
+
+<style lang="scss">
+</style>

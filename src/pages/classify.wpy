@@ -1,0 +1,112 @@
+<template>
+  <view class="classify-wrapper">
+    <scroll-view class="classify-sidebar" scroll-y scroll-with-animation="true">
+      <view class="classify-name {{index === curIndex ? 'active' : ''}}" wx:for="{{classifyList}}" wx:key="item" wx:index="index" @tap="changeClassify" data-index="{{index}}">
+        {{item.category}}
+      </view>
+    </scroll-view>
+    <scroll-view class="classify-content" scroll-y scroll-with-animation="true">
+      <view class="classify-content-wrapper">
+        <navigator open-type="navigate" wx:for="{{childList}}" wx:key="item" wx:index="index" url="/pages/shoplist?code={{code}}">
+          <view class="classify-detail">
+            <image src="{{item.picUrl}}"/>
+            <view>{{item.time}}{{item.brand}}</view>
+          </view>
+        </navigator>
+      </view>
+    </scroll-view>
+  </view>
+</template>
+
+<script>
+	import wepy from 'wepy';
+  import http from "../utils/http";
+  import { classifyList } from "../api/api";
+
+	export default class Classify extends wepy.page {
+    mixins = [http]
+    config = {
+      navigationBarTitleText: "分类"
+    }
+    data = {
+      curIndex: 0,
+      code: "",
+      classifyList: [],
+      childList: {}
+    }
+    onLoad() {
+      this.$get(
+        {
+          url: "/api/classifyList",
+          data: {
+            MockkeyName: "classifyList"
+          }
+        },
+        {
+          success: (res) => {
+            this.classifyList = res;
+            this.childList = this.classifyList[this.curIndex].lists;
+            this.code = this.classifyList[this.curIndex].code;
+          },
+          fail: (res) =>  {
+            console.log(res);
+          }
+        }
+      )
+    }
+    methods = {
+      changeClassify(e) {
+        let index = e.currentTarget.dataset.index;
+        this.curIndex = index;
+        this.code = this.classifyList[0].code;
+        this.childList = this.classifyList[this.curIndex].lists
+      }
+    }
+	};
+</script>
+
+<style lang="scss">
+  @import "../assets/styles/_mixins";
+  .classify-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    .classify-sidebar {
+      width: 100rpx;
+      height: 100vh;
+      background: $gray;
+      text-align: center;
+      line-height: rpx(80);
+      view {
+        font-size: $size28;
+      }
+      .active {
+        border-left: rpx(6) solid $activeRed;
+        background: $white;
+        color: $activeRed;
+      }
+    }
+    .classify-content {
+      flex: 1 0 0;
+      padding: 0 $size20;
+      .classify-content-wrapper {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: flex-start;
+        align-items: flex-start;
+        text-align: center;
+        .classify-detail {
+          padding-right: $size20;
+          padding-bottom: $size20;
+          image {
+            width: 180rpx;
+            height: 220rpx;
+          }
+          view {
+            fonts-size: $size14;
+          }
+        }
+      }
+    }
+  }
+</style>

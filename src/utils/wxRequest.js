@@ -12,7 +12,7 @@ const DEBUG = true;
 
 
 const wxRequest = async (url, params={}, keyName) => {
-  Tip.loading();
+  //Tip.loading();
   let data = params.query || {};
   data.sign = SIGN;
   data.time = TIMESTAMP;
@@ -31,12 +31,12 @@ const wxRequest = async (url, params={}, keyName) => {
     });
   } else {
    res = await new Promise((resolve) => {
-      setTimeout(() => {
+      //setTimeout(() => {
         resolve(Mock[keyName]);
-      }, 2000);
+      //}, 2000);
     })
   }
-  Tip.loaded();
+  //Tip.loaded();
   return res;
 }
 module.exports = {

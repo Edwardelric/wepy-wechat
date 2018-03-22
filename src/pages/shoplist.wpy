@@ -1,0 +1,82 @@
+<template>
+  <view class="shoplist-wrapper">
+    <view class="img-header">
+      <image src="{{shop.lists[0].picUrl}}"/>
+    </view>
+    <view class="info">
+      <text>{{shop.category}}</text>
+    </view>
+    <view class="shoplist-content">
+      <navigator open-type="navigate" wx:for="{{shop.lists}}" wx:key="item" url="/pages/shopdetail?squcode={{code}}&skucode={{item.code}}">
+        <image src="{{item.picUrl}}" />
+        <view>{{item.time}}</view>
+        <view>{{item.brand}}</view>
+        <view class="price">￥{{item.price}}</view>
+      </navigator>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  import { classifyList } from "../api/api";
+
+  export default class ShopList extends wepy.page {
+    config = {
+      navigationBarTitleText: "商品专区页"
+    }
+    data = {
+      code: "",
+      shop: {}
+    }
+    onLoad(option) {
+      this.code = option.code;
+      classifyList({
+        query: {}
+      }).then((res) => {
+        if (res) {
+          this.classifyList = res;
+          this.shop = this.classifyList.filter((item, index) => {
+            if (item.code === this.code) {
+              return true;
+            }
+          })[0];
+          this.$apply();
+        }
+      });
+    }
+  };
+</script>
+
+<style lang="scss">
+  @import "../assets/styles/_mixins";
+  .shoplist-wrapper {
+    .img-header {
+      height: rpx(200);
+    }
+    .info {
+      padding: $size14;
+    }
+    .shoplist-content {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: $size20;
+      text-align: center;
+      navigator {
+        width: rpx(200);
+        image {
+          width: 100%;
+          height: rpx(200);
+        }
+        view {
+          font-size: $size24;
+        }
+        .price {
+          color: $activeRed;
+        }
+      }
+    }
+  }
+</style>

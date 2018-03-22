@@ -7,7 +7,7 @@
           <!--<view class="series">年份季节: {{item.time}}{{item.series}}</view>-->
         <!--</navigator>-->
       <!--</repeat>-->
-      <navigator class="discover-item" open-type="navigate" wx:for="{{list}}" wx:key="item" url="/pages/detail?code={{item.code}}">
+      <navigator class="discover-item" open-type="navigate" wx:for="{{list}}" wx:key="item" url="/pages/shoplist?code={{item.code}}">
         <image src="{{item.picUrl}}" class="discover-image"/>
         <view class="brand">品牌: {{item.brand}}</view>
         <view class="series">年份季节: {{item.time}}{{item.series}}</view>
@@ -22,8 +22,14 @@
 	  props = {
       list: []
     }
-    data = {}
-    onLoad() {}
+    data = {
+	    list: this.list
+    }
+    onLoad() {
+//	    console.log(this);
+//	    console.log(this.$parent.list);
+//	    console.log("discover")
+    }
 	};
 </script>
 

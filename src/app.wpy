@@ -5,7 +5,6 @@
 <script>
 import wepy from "wepy";
 import "wepy-async-function";
-import { wxJsCode2Session } from "./api/api";
 import {
   USER_SPECICAL_INFO,
   USER_INFO,
@@ -13,14 +12,41 @@ import {
   ADDRESS_ID,
   SEL_CLASS_CODE
 } from "./utils/constant";
-
+import Tip from "./utils/tip";
 
 export default class Index extends wepy.app {
+  constructor () {
+    super();
+    this.intercept("request", {
+      config (p) {
+        p.timestamp = +new Date();
+        console.log('config request: ', p);
+        Tip.loading();
+        return p;
+      },
+      success (p) {
+        console.log('request success: ', p);
+        Tip.loaded();
+        return p;
+      },
+      fail (p) {
+        console.log('request fail: ', p);
+        Tip.loaded();
+        return p;
+      },
+      complete (p) {
+        console.log('request complete: ', p);
+        Tip.loaded();
+      }
+    });
+  }
   config = {
     pages: [
       "pages/home",
       "pages/search",
-      "pages/detail"
+      "pages/shoplist",
+      "pages/shopdetail",
+      "pages/classify"
     ],
     window: {
       backgroundTextStyle: "dark",              // 下拉背景字体、loading图的样式
@@ -41,7 +67,7 @@ export default class Index extends wepy.app {
         iconPath: "assets/images/common/icon_home.png",
         selectedIconPath: "assets/images/common/icon_home_active.png"
       }, {
-        pagePath: "pages/search",
+        pagePath: "pages/classify",
         text: "分类",
         iconPath: "assets/images/common/icon_classify.png",
         selectedIconPath: "assets/images/common/icon_classify_active.png"
@@ -58,17 +84,9 @@ export default class Index extends wepy.app {
       }]
     }
   }
-  async onLaunch() {
-    wxJsCode2Session({
-      query: {},
-    }).then((res) => {
-      if (res) {
-        let {openId, expiresIn} = res;
-        wepy.setStorageSync(USER_SPECICAL_INFO, {openId, expiresIn})
-      } else {
-        console.log("获取用户登录状态失败");
-      }
-    });
+  globalData = {
+
   }
+  onLaunch() {}
 }
 </script>
